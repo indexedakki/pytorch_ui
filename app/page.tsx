@@ -2,7 +2,7 @@
 
 "use client"
 import React, { useState } from 'react';
-import ChangeEvent from react
+import ChangeEvent from 'react';
  
 const UploadPage = () => {
   const [selection, setSelection] = useState<string | null>('');
