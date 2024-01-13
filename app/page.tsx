@@ -1,7 +1,7 @@
 // pages/index.js
 
 "use client"
-import React, { useState } from 'react';
+
 import React, { useState, ChangeEvent } from 'react';
  
 const UploadPage = () => {
