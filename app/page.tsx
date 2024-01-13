@@ -16,9 +16,15 @@ const UploadPage = () => {
   };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
-    setError(null);
+     const selectedFile = event.target.files?.[0];
+
+     if (selectedFile) {
+       setFile(selectedFile);
+       setError(null);
+     } else {
+       // Handle the case when no file is selected (optional)
+       setError('Please select a file.');
+     }
   };
 
   const handleGithubRepoChange = (event: ChangeEvent<HTMLInputElement>) => {
