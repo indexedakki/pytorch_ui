@@ -2,7 +2,7 @@
 
 "use client"
 import React, { useState } from 'react';
-
+import ChangeEvent from react
  
 const UploadPage = () => {
   const [selection, setSelection] = useState<string | null>('');
@@ -15,13 +15,13 @@ const UploadPage = () => {
     setError(null);
   };
 
-  const handleFileChange = (event: <File | null) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
     setError(null);
   };
 
-  const handleGithubRepoChange = (event: string) => {
+  const handleGithubRepoChange = (event: ChangeEvent<HTMLInputElement>) => {
     setGithubRepo(event.target.value);
     setError(null);
   };
