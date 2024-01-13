@@ -5,12 +5,12 @@ import React, { useState } from 'react';
 
  
 const UploadPage = () => {
-  const [selection, setSelection] = useState(null);
+  const [selection, setSelection] = useState<string | null>(null);
   const [file, setFile] = useState(null);
   const [githubRepo, setGithubRepo] = useState('');
   const [error, setError] = useState(null);
 
-  const handleSelectionChange = (value:string) => {
+  const handleSelectionChange = (value:string | null) => {
     setSelection(value);
     setError(null);
   };
