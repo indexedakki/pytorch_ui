@@ -5,23 +5,23 @@ import React, { useState } from 'react';
 
  
 const UploadPage = () => {
-  const [selection, setSelection] = useState<string | null>(null);
-  const [file, setFile] = useState(null);
-  const [githubRepo, setGithubRepo] = useState('');
-  const [error, setError] = useState(null);
+  const [selection, setSelection] = useState<string | null>('');
+  const [file, setFile] = useState<File | null>(null);
+  const [githubRepo, setGithubRepo] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
 
   const handleSelectionChange = (value:string | null) => {
     setSelection(value);
     setError(null);
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: <File | null) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
     setError(null);
   };
 
-  const handleGithubRepoChange = (event) => {
+  const handleGithubRepoChange = (event: string) => {
     setGithubRepo(event.target.value);
     setError(null);
   };
