@@ -10,7 +10,7 @@ const UploadPage = () => {
   const [githubRepo, setGithubRepo] = useState('');
   const [error, setError] = useState(null);
 
-  const handleSelectionChange = (value) => {
+  const handleSelectionChange = (value:string) => {
     setSelection(value);
     setError(null);
   };
