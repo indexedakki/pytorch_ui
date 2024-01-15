@@ -3,6 +3,14 @@
 "use client"
 
 import React, { useState, ChangeEvent } from 'react';
+const express = require('express');
+const app = express();
+
+app.use((req, res, next) => {
+ res.header("Access-Control-Allow-Origin", "pypypy12.azurewebsites.net"); // replace * with your domain
+ res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+ next();
+});
  
 const UploadPage = () => {
   const [selection, setSelection] = useState<string | null>('');
