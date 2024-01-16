@@ -2,6 +2,7 @@
 
 "use client"
 
+import fs from 'fs';
 import React, { useState, ChangeEvent } from 'react';
 const express = require('express');
 const app = express();
