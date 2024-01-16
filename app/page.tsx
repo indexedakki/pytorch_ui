@@ -59,7 +59,7 @@ const UploadPage = () => {
       
       const response = await fetch('https://pypypy12.azurewebsites.net/', {
         method: 'POST',
-        mode:"no-cors",
+        mode:"cors",
         headers: {
           'Content-Type': 'application/json',
         },
