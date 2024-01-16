@@ -61,10 +61,16 @@ const UploadPage = () => {
         method: 'POST',
         mode:"cors",
         headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ data: githubRepo }),
-      });
+        'Content-Type': 'text/plain',
+      },
+      body: githubRepo,
+     });
+     
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ data: githubRepo }),
+      // });
       
         if (response.ok){
           const data = await response.json();
