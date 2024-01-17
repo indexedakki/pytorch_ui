@@ -57,9 +57,9 @@ const UploadPage = () => {
     } else if (selection === 'github') {
       console.log('GitHub repository:', githubRepo);
       
-      const response = await fetch('https://pypypy12.azurewebsites.net/', {
+      const response = await fetch('https://llmopenai123.scm.azurewebsites.net/', {
         method: 'POST',
-        mode:"cors",
+        
         headers: {
         'Content-Type': 'text/plain',
       },
