@@ -59,7 +59,7 @@ const UploadPage = () => {
       
       const response = await fetch('https://llmopenai123.scm.azurewebsites.net/', {
         method: 'POST',
-        
+        mode:'cors',
         headers: {
         'Content-Type': 'text/plain',
       },
