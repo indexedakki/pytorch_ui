@@ -2,117 +2,123 @@
 
 "use client"
 
-import React, { useState, ChangeEvent } from 'react';
-// const express = require('express');
-// const app = express();
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-// app.use((req, res, next) => {
-//  res.header("Access-Control-Allow-Origin", "pypypy12.azurewebsites.net"); // replace * with your domain
-//  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-//  next();
-// });
-//  app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "https://example.com");
-//   res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-//   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-//   next();
-// })
- 
 const UploadPage = () => {
-  const [selection, setSelection] = useState<string | null>('');
-  const [file, setFile] = useState<File | null>(null);
-  const [githubRepo, setGithubRepo] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
 
-  const handleSelectionChange = (value:string | null) => {
+  
+  const [selection, setSelection] = useState(null);
+  const [file, setFile] = useState(null);
+  const [githubRepo, setGithubRepo] = useState('');
+  const [error, setError] = useState(null);
+  const router = useRouter();
+  
+
+  const handleSelectionChange = (value) => {
     setSelection(value);
     setError(null);
   };
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-     const selectedFile = event.target.files?.[0];
-
-     if (selectedFile) {
-       setFile(selectedFile);
-       setError(null);
-     } else {
-       // Handle the case when no file is selected (optional)
-       setError('Please select a file.');
-     }
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+    setError(null);
   };
 
-  const handleGithubRepoChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleGithubRepoChange = (event) => {
     setGithubRepo(event.target.value);
     setError(null);
   };
 
-  const handleSubmit = async () => {
-    try {
+  const handleSubmit = async() => {
     // Handle the submission based on the user's selection
-    if (selection === 'local files') {
-      // Handle file upload logic
-      console.log('Uploading file:', file);
-     
-    } else if (selection === 'github') {
-      console.log('GitHub repository:', githubRepo);
-      
-      const response = await fetch('https://llmopenai123.scm.azurewebsites.net/', {
-        method: 'POST',
-      
-        headers: {
-        'Content-Type': 'text/plain',
-      },
-      body: githubRepo,
-     });
-     
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ data: githubRepo }),
-      // });
-      
+    setError(null);
+    try{
+        // Handle file upload logic
+        if (selection === 'local files') {
+          const formData = new FormData();
+          formData.append('file',file);
+          const response = await fetch('https://llmopenai123.azurewebsites.net/', 
+          { 
+            method: 'POST',
+            body: formData,
+          });
+          if (response.ok){
+          //Handle the response as needed
+            const data = await response.json();
+            console.log('Response data: ', data); 
+            setError('The File generated successfully.');
+          
+          }
+          else{
+            console.error('Error:', response.statusText);
+            setError('An Error occured. Please try again.');
+          }
+      }
+    }
+    catch (error) {
+      console.error('Error uploading file:', error);
+      setError('An Error occured. Please try again.');
+    }
+    try{
+      if (selection === 'github') {
+        // Handle GitHub repository logic
+        console.log('GitHub repository:', githubRepo);
+        const response = await fetch('https://llmopenai123.azurewebsites.net/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },        body: JSON.stringify({ data: githubRepo }),
+        });
         if (response.ok){
           const data = await response.json();
           console.log('Server response:', data);
-          setError('The File generated successfully.');  
-      } else {
-        console.error('Error uploading file:', error);
-        setError('An Error occured. Please try again.');
-      }
+          // setError('The File generated successfully.');
+          // console.log('Response data: ', data);
+          //setError('The File generated successfully.');
+          router.push('/codegenerate');  
+          
+        }
+        else{
+          console.error('Error:', response.statusText);
+          setError('An Error occured. Please try again.');
+        }
+           
     }
-  } catch (error) {
-    console.error('Error:', error);
-    // Handle error case
   }
-};
+    catch (error) {
+      console.error('Error uploading Github repository:', error);
+      setError('An Error occured. Please try again.');
+        }
+      }; 
 
   return (
   
-    // Change from 'class' to 'className'
-  <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-slate-900 via-slate-800 to-slate-700">
-    <div className="absolute top-0 left-0 w-full h-full opacity-30">
-      <img src="https://cloud2data.com/wp-content/uploads/2023/04/AI-18-1536x1024.jpg" alt="Background Image" className="w-full h-full object-cover" />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-slate-900 via-slate-800 to-slate-700">
+      <div className="absolute top-0 left-0 w-full h-full opacity-30">
+    <img src="https://cloud2data.com/wp-content/uploads/2023/04/AI-18-1536x1024.jpg" alt="Background Image" className="w-full h-full object-cover" />
     </div>
     <div className="relative z-10">
-      <h1 className="text-5xl font-bold mb-8 text-white">AI CODE DOCUMENTATION AGENT</h1>
+      <h1 className= "text-5xl font-bold mb-8 text-white">AI CODE DOCUMENTATION AGENT</h1>
 
       <div className="mb-4"></div>
       <div className="mb-4 text-center flex flex-col items-center">
-        <label className="text-lg font-bold mb-4 text-white">UPLOAD FILE:</label>
+        <label className= "text-lg font-bold mb-4 text-white">UPLOAD FILE:</label>
         <div className="grid grid-cols-3 gap-4 content-center">
-          <select className="col-span-3 p-2 border rounded" onChange={(e) => handleSelectionChange(e.target.value)}>
-            <option value="">Choose an option</option>
-            <option value="local files">Upload from the device</option>
-            <option value="github">GitHub Repository</option>
-          </select>
+        <select className="col-span-3 p-2 border rounded" onChange={(e) => handleSelectionChange(e.target.value)}>
+          <option value="">Choose an option</option>
+          <option value="local files">Upload from the device</option>
+          <option value="github">GitHub Repository</option>
+        </select>
         </div>
       </div>
 
       {selection === 'local files' && (
         <div className="mb-4 text-center">
           <label className="text-lg font-bold mb-4 text-white">Upload from the device: </label>
-          <input type="file" className="block mb-4 border rounded mx-auto" onChange={handleFileChange} />
+          <input type="file" className="block mb-4 border rounded mx-auto" 
+          onChange={handleFileChange} />
         </div>
       )}
 
@@ -132,9 +138,9 @@ const UploadPage = () => {
       <button onClick={handleSubmit} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">Submit</button>
       {error && <div style={{ color: 'red'}}>{error}</div>}
     </div>
-  </div>
-
+    </div>
   );
-};
+      };
 
-export default UploadPage;
+export default (UploadPage);
+
